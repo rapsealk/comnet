@@ -1,0 +1,29 @@
+
+<!doctype html>
+<html lang = "ko">
+
+	<head>
+	
+	<meta charset="euc-kr">
+
+	<title> 랭킹페이지 </title>
+
+	</head>
+
+
+
+	<body>
+
+	<a href="http://127.0.0.1:8000/index"> <p>메인페이지 </p></a>
+
+	{% if ranker %}
+	<p> Ranking </br> </p>
+	<ul>
+	{% for rank in ranker %}
+	<p> {{rank}} </p>
+	{% endfor %}
+	</ul>
+	{% else %}
+	<p>No Data</p>
+	{% endif %}
+	</body>
