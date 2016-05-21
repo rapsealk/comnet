@@ -19,9 +19,20 @@
 	{% if ranker %}
 	<p> Ranking </br> </p>
 	<ul>
-	{% for rank in ranker %}
-	<p> {{rank}} </p>
-	{% endfor %}
+	<table>
+		<tr>
+			<td>등수 </td>
+			<td>아이디</td>
+			<td>점수</td>
+		</tr>
+		{% for rank in ranker %}
+		<tr>
+			<td>  {{ forloop.counter }}  </td>
+			<td> {{ rank.name }} </td>
+			<td> {{ rank.score }} </td>
+		</tr>
+		{% endfor %}
+	</table>
 	</ul>
 	{% else %}
 	<p>No Data</p>
