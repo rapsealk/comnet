@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hangman'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,6 +68,7 @@ TEMPLATES = [
         },
     },
 ]
+FILE_CHARSET = 'euc-kr'
 
 WSGI_APPLICATION = 'comnet.wsgi.application'
 
@@ -106,7 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 

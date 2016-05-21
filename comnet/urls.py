@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from hangman import views
 
+#url(regex, view, kwargs=None, name=None, prefix='')
+#regex: URL regular expression
+#view: call view, parameter
+#kwargs: python dictionary parameter
+#name: url name
+#prefix: view prefix
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^index/$', views.index, name='index'),
+    url(r'^wait/$', views.wait, name='wait'),
+    url(r'^game/$', views.game, name='game'),
+    url(r'^rank/$', views.rank, name='rank'),
 ]
+
