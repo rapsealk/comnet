@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
 # Create your models here.
 
 class User(models.Model):   # table class inherits models.Model
@@ -20,3 +19,11 @@ class Question(models.Model):
     
     def __unicode__(self):
         return "%s: %s" %(self.word, self.hint)
+
+
+class Counting(models.Model):
+    name = models.CharField(max_length=30, default='')
+    count = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        return "%s: %d" %(self.name, self.count)

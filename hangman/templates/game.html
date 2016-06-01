@@ -14,7 +14,13 @@
 
 	<body>
 
-	<a href="http://127.0.0.1:8000/rank"><p> 랭킹페이지</p> </a>
-	<!--DB=-->
+	<a href="/rank"><p> 랭킹페이지</p> </a>
+
+	{% if word %}
+	<p> Quiz: {{ word.word }} </br> </p>
+	<p> Length: {{ word.length }} </br> </p>
+	<p> _ </p> <p> - </p>
+	<li> _ </li> <li> - </li>
+	{% endif %}
 
 	</body>
