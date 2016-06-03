@@ -1,0 +1,40 @@
+
+<!doctype html>
+<html lang = "ko">
+
+	<head>
+	
+	<meta charset="euc-kr">
+
+	<title> 게임페이지 </title>
+
+	<script language="javascript">
+	function GetAnswer() {
+		
+	}
+	</script>
+
+	</head>
+
+
+
+	<body>
+
+	<a href="./rank.html"><p> 랭킹페이지</p> </a>
+
+	{% if word %}
+	<p> Quiz: {{ word.word }} </br> </p>
+	<p> Length: {{ word.length }} </br> </p>
+	{% endif %}
+
+	<script language="javascript">
+	name = prompt("username", "default")
+	alert("Welcome " + name + "!")
+
+	document.write("Hello " + name + "!\n")
+
+
+	</script>
+
+	</body>
+</html>

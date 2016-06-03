@@ -1,0 +1,40 @@
+
+<!doctype html>
+<html lang = "ko">
+
+	<head>
+	
+	<meta charset="euc-kr">
+
+	<title> 랭킹페이지 </title>
+
+	</head>
+
+
+
+	<body>
+
+	<a href="./index.html"> <p>메인페이지 </p></a>
+
+	{% if ranker %}
+	<p> Ranking </br> </p>
+	<ul>
+	<table>
+		<tr>
+			<td>등수 </td>
+			<td>아이디</td>
+			<td>점수</td>
+		</tr>
+		{% for rank in ranker %}
+		<tr>
+			<td>  {{ forloop.counter }}  </td>
+			<td> {{ rank.name }} </td>
+			<td> {{ rank.score }} </td>
+		</tr>
+		{% endfor %}
+	</table>
+	</ul>
+	{% else %}
+	<p>No Data</p>
+	{% endif %}
+	</body>
