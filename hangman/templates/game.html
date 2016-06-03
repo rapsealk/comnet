@@ -4,9 +4,15 @@
 
 	<head>
 	
-	<meta charset="cp949">
+	<meta charset="euc-kr">
 
 	<title> 게임페이지 </title>
+
+	<script language="javascript">
+	function GetAnswer() {
+		
+	}
+	</script>
 
 	</head>
 
@@ -19,8 +25,16 @@
 	{% if word %}
 	<p> Quiz: {{ word.word }} </br> </p>
 	<p> Length: {{ word.length }} </br> </p>
-	<p> _ </p> <p> - </p>
-	<li> _ </li> <li> - </li>
 	{% endif %}
 
+	<script language="javascript">
+	name = prompt("username", "default")
+	alert("Welcome " + name + "!")
+
+	document.write("Hello " + name + "!\n")
+
+
+	</script>
+
 	</body>
+</html>
