@@ -29,5 +29,7 @@ urlpatterns = [
     url(r'^wait/$', views.wait, name='wait'),
     url(r'^game/$', views.game, name='game'),
     url(r'^rank/$', views.rank, name='rank'),
+#    url(r'^index/aaaaa/$', views.aaaaa, name='index'),
+
 ]
 

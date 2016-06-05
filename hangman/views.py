@@ -4,6 +4,7 @@ from hangman.models import User
 from hangman.models import Question
 from hangman.models import Counting
 from random import randint
+from django.http import HttpResponse 
 
 # Create your views here.
 
@@ -25,3 +26,17 @@ def rank(request):
     ranker = User.objects.all().order_by('-score')[:5]
     context = {'ranker' : ranker}
     return render(request, 'rank.html', context)
+
+#def aaaaa(request):
+#   t = get_template('index.html')
+#   k = request.GET
+#   ttt = k['va']
+#   html = t.render(Context({'va' : ttt}))
+#   return HttpResponse(html)
+
+
+
+
+
+
+
