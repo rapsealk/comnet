@@ -5,6 +5,7 @@ from hangman.models import Question
 from hangman.models import Counting
 from random import randint
 from django.http import HttpResponse 
+import django.middleware.csrf#.CsrfViewMiddleware
 
 # Create your views here.
 
@@ -15,11 +16,36 @@ def wait(request):
     Counting.objects.filter(name='Player').update(count=F('count')+1)
     return render(request, 'waiting.html')
 
-def game(request):
+def bridge(request):
     Counting.objects.filter(name='Player').update(count=F('count')-1)
+    player = Counting.objects.all()
+    player = player[0]
     word = Question.objects.all().order_by('key')
     word = word[randint(0, len(word)-1)]
-    context = {'word' : word}
+    context = {'player' : player, 'word' : word}
+    return render(request, 'game.html', context)
+
+def game(request):
+    answer = request.POST.get('answer', '')
+    length = request.POST.get('length', 0)
+    word = request.POST.get('word', '')
+    player = request.POST.get('player', 0)
+    current = request.POST.get('current', '')
+    
+    if length:
+        for i in range(length):
+            if answer == word[i]:
+                current[i] = answer
+    #Counting.objects.filter(name='Player').update(count=F('count')-1)
+    #player = Counting.objects.all()
+    #player = player[0]
+    #word = Question.objects.all().order_by('key')
+    #word = word[randint(0, len(word)-1)]
+    if answer and word and player and current:
+        context = {'answer':answer, 'word':word, 'player':player+1, 'current':current}
+    else:
+        context = {'answer':answer, 'word':word, 'player':player, 'current':current}
+    #context = {'player' : player, 'word' : word, 'answer' : answer}
     return render(request, 'game.html', context)
 
 def rank(request):

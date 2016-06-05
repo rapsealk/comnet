@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/$', views.index, name='index'),
     url(r'^wait/$', views.wait, name='wait'),
+    url(r'^bridge/$', views.bridge, name='bridge'),
     url(r'^game/$', views.game, name='game'),
     url(r'^rank/$', views.rank, name='rank'),
 #    url(r'^index/aaaaa/$', views.aaaaa, name='index'),
