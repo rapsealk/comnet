@@ -27,3 +27,12 @@ class Counting(models.Model):
     
     def __unicode__(self):
         return "%s: %d" %(self.name, self.count)
+
+
+class Quiz(models.Model):
+    key = models.CharField(max_length=10)
+    answer = models.CharField(max_length=30, default='')
+    current = models.CharField(max_length=30, default='')
+
+    def __unicode__(self):
+        return "%s(%s)" %(self.current, self.answer)

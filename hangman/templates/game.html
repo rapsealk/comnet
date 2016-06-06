@@ -14,17 +14,23 @@
 
 		<a href="/rank"><p id="link"></p> </a>
 
+<!--
 		{% if word %}
 		<p> Quiz: {{ word.word }} </br> </p>
 		<p> Length: {{ word.length }} </br> </p>
-<!--		<input type="hidden" id="word" name="answer" value="{{word.word}}"> -->
+		<input type="hidden" id="word" name="answer" value="{{word.word}}">
 		{% else %}
 		<p> No data found. </p>
 		{% endif %}
+-->
+
+
 <!-- -->
 	<form action="/game/" method="post">{% csrf_token %}
 		<label for="answer">Answer: </label>
 		<input id="answer" type="text" name="answer" value="{{ player_answer }}">
+		<input id="word" type="hidden" name=""word" value="{{ word }}">
+		
 <!--	<input id="word" type="text" name="word" value="{{ word.word }}">
 		<input id="length" type="integer" name="length" value="{{ word.length }}">
 		<input id="player" type="integer" name="player" value="{{ player.count }}">
@@ -32,6 +38,15 @@
 		<input type="submit" value="OK">
 	</form>
 <!-- -->
+
+		{% if end %}
+		<form action="/rank/" method="post">{% csrf_token %}
+			<label for="id">ID: </label>
+			<input id="id" type="text" name="id" value="{{ player_answer }}">
+			<input type="submit" value="OK">
+		</form>
+		{% endif %}
+		
 		<script language="javascript">
 			var count = document.getElementById("player").value;
 		</script>
@@ -61,8 +76,8 @@
 			for(i=0; i<answer.length; i++) {
 				temp += "_";
 			}
-			name = prompt("username", "default")
-			document.write("Hello " + name + "!\n")
+			//name = prompt("username", "default")
+			//document.write("Hello " + name + "!\n")
 
 			input.onclick = function() {
 
