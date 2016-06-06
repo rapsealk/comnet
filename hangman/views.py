@@ -29,7 +29,6 @@ def wait(request):
 def game(request):
     answer = request.POST.get('answer', '')
     player = request.POST.get('player', 0)
-
     if Counting.objects.filter(name='Init')[0].count == 1:
         Counting.objects.filter(name='Player').update(count=F('count')-1)
         player = Counting.objects.all()
@@ -67,6 +66,7 @@ def game(request):
     return render(request, 'game.html', context)
 
 def rank(request):
+    Counting.objects.filter(name='Init').update(count=1)
     user = request.POST.get('id', "default")
     if User.objects.filter(name=user):
         User.objects.filter(name=user).update(score=F('score')+100)
