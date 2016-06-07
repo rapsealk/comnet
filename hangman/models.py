@@ -30,11 +30,12 @@ class Counting(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=30, default='default')
-    number = models.IntegerField(default=0)
+    #number = models.IntegerField(default=0)
     init = models.IntegerField(default=1)
+    lives = models.IntegerField(default=8)
     
     def __unicode__(self):
-        return "Player%d_init:%d" %(self.number, self.init)
+        return "%s(%d)_init:%d" %(self.name, self.lives, self.init)
 
 
 class Quiz(models.Model):

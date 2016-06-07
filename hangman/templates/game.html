@@ -28,10 +28,17 @@
 		<label for="answer">Answer: </label>
 		<input id="answer" type="text" name="answer" value="{{ player_answer }}">
 		<input id="word" type="hidden" name="word" value="{{ word }}">
+		<input id="key" type="hidden" name="key" value="{{ key }}">
 		<input type="submit" value="OK">
 	</form>
+	<form action="/game/" method="post">{% csrf_token %}
+		<input id="answer" type="hidden" name="answer" value="#refresh#">
+		<input id="word" type="hidden" name="word" value="{{ word }}">
+		<input id="key" type="hidden" name="key" value="{{ key }}">
+		<input type="submit" value="새로고침">
+	</form>
 	{% endif %}
-	
+
 		{% if end %}
 			{% ifequal lives 0 %}
 			<form action="/rank/" method="post">{% csrf_token %}

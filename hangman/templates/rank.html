@@ -14,7 +14,10 @@
 
 	<body bgcolor=#FFD7EA>
 
-	<a href="/index"> <p>메인페이지 </p></a>
+	<form action="/index/" method="post">{% csrf_token %}
+		<input type="submit" value="메인페이지">
+	</form>
+<!--	<a href="/index"> <p>메인페이지 </p></a> -->
 
 	{% if ranker %}
 	<p> Ranking </br> </p>

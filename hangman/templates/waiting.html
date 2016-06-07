@@ -17,11 +17,23 @@
 
 	<form action="/wait/" method="post">{% csrf_token %}
 		<input id="new" type="hidden" name="new" value="">
+		<input id="key" type="hidden" name="key" value="{{ key }}">
 		<input type="submit" value="새로고침">
 	</form>
 
 	{% if player >= 2 %}
-		<a href="/game"><p> 게임페이지 </p></a>
+		</br>
+		<form action="/game/" method="post">{% csrf_token %}
+			<input id="new" type="hidden" name="new" value="new">
+			<input id="key" type="hidden" name="key" value="{{ key }}">
+			<input type="submit" value="게임페이지">
+		</form>
+<!--		<a href="/game"><p> 게임페이지 </p></a> -->
 	{% endif %}
+	</br>
+	<form action="/index/" method="post">{% csrf_token %}
+		<input id="back" type="hidden" name="back" value="back">
+		<input type="submit" value="뒤로가기">
+	</form>
 
 	</body>

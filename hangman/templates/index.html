@@ -24,8 +24,13 @@
 	</form>
 
 <!--	<a href="/wait"> <p>대기페이지</p> </a> -->
+	</br>
 
-	<a href="/rank"> <p>랭킹페이지</p> </a>
+	<form action="/rank/" method="post">{% csrf_token %}
+		<input type="submit" value="랭킹페이지">
+	</form>
+	
+<!--	<a href="/rank"> <p>랭킹페이지</p> </a> -->
 		
 <!--	<form name="input" method="post" action="http://127.0.0.1:8000/index/aaaaa/">
 	 {% csrf_token %}

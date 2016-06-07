@@ -4,6 +4,7 @@ from hangman.models import User
 from hangman.models import Question
 from hangman.models import Counting
 from hangman.models import Quiz
+from hangman.models import Player
 from random import randint
 from django.http import HttpResponse 
 import django.middleware.csrf#.CsrfViewMiddleware
@@ -15,14 +16,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Create your views here.
 
 def index(request):
+    back = request.POST.get('back', '')
+    if back == 'back':
+        Counting.objects.filter(name='Player').update(count=F('count')-1)
     return render(request, 'index.html')
+
 
 def wait(request):
     new = request.POST.get('new', '')
+    key = request.POST.get('key', '')
     if new == 'new':
         Counting.objects.filter(name='Player').update(count=F('count')+1)
-    player = Counting.objects.filter(name='Player')[0].count
-    context = {'player' : player}
+    player = Counting.objects.filter(name='Player')
+    player = player[0].count
+    if key == '':
+        key = player
+    context = {'player' : player, 'key' : key}
     return render(request, 'waiting.html', context)
 
 #def bridge(request):
@@ -36,11 +45,19 @@ def wait(request):
 
 def game(request):
     answer = request.POST.get('answer', '')
-    player = request.POST.get('player', 0)
-    if Counting.objects.filter(name='Init')[0].count == 1:
+    #player = request.POST.get('player', 0)
+    word = request.POST.get('word', '')
+    new = request.POST.get('new', '')
+    key = request.POST.get('key', 0)
+    if new == 'new':
         Counting.objects.filter(name='Player').update(count=F('count')-1)
-        player = Counting.objects.all()
-        player = player[0].count
+    #if Counting.objects.filter(name='Init')[0].count == 1:
+    if Player.objects.filter(name='Player'+str(key))[0].init == 1:        
+        Player.objects.filter(name='Player'+str(key)).update(init=0)
+        #Counting.objects.filter(name='Player').update(count=F('count')-1)
+        #player = Counting.objects.all()
+        #player = player[0].count
+    if Counting.objects.filter(name='Init')[0].count == 1:
         word = Question.objects.all().order_by('key')
         word = word[randint(0, len(word)-1)]
         Counting.objects.filter(name='Init').update(count=0)
@@ -50,6 +67,7 @@ def game(request):
         Quiz.objects.filter(key='prob').update(answer=word.word, current=temp, lives=8)
     else:
         word = Quiz.objects.all()[0].answer
+        
     #if answer and word and player and current:
     #    context = {'answer':answer, 'word':word, 'player':player+1, 'current':current}
     #else:
@@ -60,31 +78,35 @@ def game(request):
 
     end = False
     found = 0
-    if len(answer)==1:
-        for i in range(len(word)):
-            if word[i] == answer:
-                cur = cur[:i]+answer+cur[i+1:]
+    if answer != "#refresh#":
+        if len(answer)==1:
+            for i in range(len(word)):
+                if word[i] == answer:
+                    cur = cur[:i]+answer+cur[i+1:]
+                    found += 1
+            if cur == word:
+                cur += "\n" + "You win!"
+                end = True
+        elif len(answer)>1:        
+            if answer == word:
+                cur = word + "\n" + "You win!"
+                end = True
                 found += 1
-        if cur == word:
-            cur += "\n" + "You win!"
-            end = True
-    elif len(answer)>1:        
-        if answer == word:
-            cur = word + "\n" + "You win!"
-            end = True
-            found += 1
-
-    if found == 0:
-        Quiz.objects.filter(key='prob').update(lives=F('lives')-1)
-    lives = Quiz.objects.filter(key='prob')[0].lives
+    
+        if found == 0:
+            #Quiz.objects.filter(key='prob').update(lives=F('lives')-1)
+            Player.objects.filter(name='Player'+str(key)).update(lives=F('lives')-1)
+    #lives = Quiz.objects.filter(key='prob')[0].lives
+    lives = Player.objects.filter(name='Player'+str(key))[0].lives
     if lives == 0:
         cur = "You Lose!"
         end = True
 
     Quiz.objects.filter(key='prob').update(current=cur)
-
-    context = {'player' : player, 'word' : word, 'answer' : cur, 'lives': lives, 'end' : end}
+    #'player' : player    
+    context = {'key' : key, 'word' : word, 'answer' : cur, 'lives': lives, 'end' : end}
     return render(request, 'game.html', context)
+
 
 def rank(request):
     Counting.objects.filter(name='Init').update(count=1)
