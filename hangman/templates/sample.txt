@@ -1,6 +1,0 @@
-<html>
-<title>Index Page</title>
-<head>Index Page</head>
-<body>Hello</body>
-<a href="./rank.html">rank</a>
-</html>
