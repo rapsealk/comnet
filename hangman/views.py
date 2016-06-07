@@ -18,8 +18,12 @@ def index(request):
     return render(request, 'index.html')
 
 def wait(request):
-    Counting.objects.filter(name='Player').update(count=F('count')+1)
-    return render(request, 'waiting.html')
+    new = request.POST.get('new', '')
+    if new == 'new':
+        Counting.objects.filter(name='Player').update(count=F('count')+1)
+    player = Counting.objects.filter(name='Player')[0].count
+    context = {'player' : player}
+    return render(request, 'waiting.html', context)
 
 #def bridge(request):
 #    Counting.objects.filter(name='Player').update(count=F('count')-1)

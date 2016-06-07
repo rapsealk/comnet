@@ -13,6 +13,15 @@
 
 	<body bgcolor=#FFD7EA>
 
-	<a href="/game"><p> 게임페이지 </p></a>
+	<p> Now {{ player }} players are Online. </br> </p>
+
+	<form action="/wait/" method="post">{% csrf_token %}
+		<input id="new" type="hidden" name="new" value="">
+		<input type="submit" value="새로고침">
+	</form>
+
+	{% if player >= 2 %}
+		<a href="/game"><p> 게임페이지 </p></a>
+	{% endif %}
 
 	</body>

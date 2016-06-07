@@ -18,7 +18,12 @@
 
 	<!-- <input type = "submit" value="확인"> -->
 
-	<a href="/wait"> <p>대기페이지</p> </a>
+	<form action="/wait/" method="post">{% csrf_token %}
+		<input id="new" type="hidden" name="new" value="new">
+		<input type="submit" value="대기페이지">
+	</form>
+
+<!--	<a href="/wait"> <p>대기페이지</p> </a> -->
 
 	<a href="/rank"> <p>랭킹페이지</p> </a>
 		
