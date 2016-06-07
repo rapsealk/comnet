@@ -10,7 +10,7 @@
 	</head>
 
 
-	<body>
+	<body bgcolor=#FFD7EA>
 
 		<a href="/rank"><p id="link"></p> </a>
 
@@ -23,19 +23,15 @@
 		<p> No data found. </p>
 		{% endif %}
 -->
-
+	{% if not end %}
 	<form action="/game/" method="post">{% csrf_token %}
 		<label for="answer">Answer: </label>
 		<input id="answer" type="text" name="answer" value="{{ player_answer }}">
 		<input id="word" type="hidden" name="word" value="{{ word }}">
-		
-<!--	<input id="word" type="text" name="word" value="{{ word.word }}">
-		<input id="length" type="integer" name="length" value="{{ word.length }}">
-		<input id="player" type="integer" name="player" value="{{ player.count }}">
-		<input id="current" type="text" name="current" value="{{ current }}"> -->
 		<input type="submit" value="OK">
 	</form>
-
+	{% endif %}
+	
 		{% if end %}
 			{% ifequal lives 0 %}
 			<form action="/rank/" method="post">{% csrf_token %}
