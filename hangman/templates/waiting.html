@@ -7,12 +7,31 @@
 
 	<title> 대기페이지 </title>
 
+	<style>
+
+	p{
+	
+	color: #fff;
+	font-size:30px;
+	
+	}
+
+	body {
+	background-color: #ffcccc;
+  	font-family: "HelveticaNeue-Light";
+  	height:100%;
+  	text-align:center;
+  	font-size:18px;
+	}
+
+	</style>
+
+
 	</head>
 
 
 
-	<body bgcolor=#FFD7EA>
-
+	<body>
 	<p> Now {{ player }} players are Online. </br> </p>
 
 	<form action="/wait/" method="post">{% csrf_token %}
