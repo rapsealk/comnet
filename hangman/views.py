@@ -87,12 +87,12 @@ def game(request):
             if cur == word:
                 cur += "\n" + "You win!"
                 end = True
-        elif len(answer)>1:        
+        elif len(answer)>1:
             if answer == word:
                 cur = word + "\n" + "You win!"
                 end = True
                 found += 1
-    
+
         if found == 0:
             #Quiz.objects.filter(key='prob').update(lives=F('lives')-1)
             Player.objects.filter(name='Player'+str(key)).update(lives=F('lives')-1)
