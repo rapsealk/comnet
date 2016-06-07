@@ -68,6 +68,21 @@ def game(request):
     else:
         word = Quiz.objects.all()[0].answer
         
+    p1 = Player.objects.filter(name='Player1')
+    p2 = Player.objects.filter(name='Player2')
+    if int(key) == 1:
+        if p2[0].done:
+            if p2[0].win:
+                p1.update(done=1, lose=1)
+            else:
+                p1.update(done=1, win=1)
+    elif int(key) == 2:
+        if p1[0].done:
+            if p1[0].win:
+                p2.update(done=1, lose=1)
+            else:
+                p2.update(done=1, win=1)
+        
     #if answer and word and player and current:
     #    context = {'answer':answer, 'word':word, 'player':player+1, 'current':current}
     #else:
@@ -85,11 +100,13 @@ def game(request):
                     cur = cur[:i]+answer+cur[i+1:]
                     found += 1
             if cur == word:
-                cur += "\n" + "You win!"
+                cur += "\n"# + "You win!"
+                Player.objects.filter(name='Player'+str(key)).update(done=1, win=1)
                 end = True
         elif len(answer)>1:
             if answer == word:
-                cur = word + "\n" + "You win!"
+                cur = word + "\n"# + "You win!"
+                Player.objects.filter(name='Player'+str(key)).update(done=1, win=1)
                 end = True
                 found += 1
 
@@ -99,19 +116,28 @@ def game(request):
     #lives = Quiz.objects.filter(key='prob')[0].lives
     lives = Player.objects.filter(name='Player'+str(key))[0].lives
     if lives == 0:
-        cur = "You Lose!"
+        #cur = "You Lose!"
+        Player.objects.filter(name='Player'+str(key)).update(done=1, lose=1)
         end = True
 
+    if p1[0].done and p2[0].done:
+        Quiz.objects.filter(key='prob').update(current=word)
+        end = True
+
+    lose = Player.objects.filter(name='Player'+str(key))[0].lose
     Quiz.objects.filter(key='prob').update(current=cur)
     #'player' : player    
-    context = {'key' : key, 'word' : word, 'answer' : cur, 'lives': lives, 'end' : end}
+    context = {'key' : key, 'word' : word, 'answer' : cur, 'lives': lives, 'lose' : lose, 'end' : end}
     return render(request, 'game.html', context)
 
 
 def rank(request):
+    key = request.POST.get('key', '')
     Counting.objects.filter(name='Init').update(count=1)
     user = request.POST.get('id', "default")
     result = request.POST.get('result', "lose")
+    if key != '':
+        Player.objects.filter(name='Player'+str(key)).update(init=1, lives=8, done=0, win=0, lose=0)
     if result == "win":
         if User.objects.filter(name=user):
             User.objects.filter(name=user).update(score=F('score')+100)

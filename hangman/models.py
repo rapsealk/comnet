@@ -33,6 +33,9 @@ class Player(models.Model):
     #number = models.IntegerField(default=0)
     init = models.IntegerField(default=1)
     lives = models.IntegerField(default=8)
+    done = models.IntegerField(default=0)
+    win = models.IntegerField(default=0)
+    lose = models.IntegerField(default=0)
     
     def __unicode__(self):
         return "%s(%d)_init:%d" %(self.name, self.lives, self.init)

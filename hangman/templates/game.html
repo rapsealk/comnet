@@ -40,18 +40,22 @@
 	{% endif %}
 
 		{% if end %}
-			{% ifequal lives 0 %}
+			{% ifequal lose 1 %}
+			<p> You Defeated! </br> </p>
 			<form action="/rank/" method="post">{% csrf_token %}
 				<label for="id">ID: </label>
 				<input id="id" type="text" name="id" value="{{ player_answer }}">
 				<input id="result" type="hidden" name="result" value="lose">
+				<input id="key" type="hidden" name="key" value="{{ key }}">
 				<input type="submit" value="OK">
 			</form>
 			{% else %}
+			<p> You Win! </br> </p>
 			<form action="/rank/" method="post">{% csrf_token %}
 				<label for="id">ID: </label>
 				<input id="id" type="text" name="id" value="{{ player_answer }}">
 				<input id="result" type="hidden" name="result" value="win">
+				<input id="key" type="hidden" name="key" value="{{ key }}">
 				<input type="submit" value="OK">
 			</form>
 			{% endifequal %}
