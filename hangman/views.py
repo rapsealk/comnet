@@ -70,18 +70,18 @@ def game(request):
         
     p1 = Player.objects.filter(name='Player1')
     p2 = Player.objects.filter(name='Player2')
-    if int(key) == 1:
-        if p2[0].done:
-            if p2[0].win:
-                p1.update(done=1, lose=1)
-            else:
-                p1.update(done=1, win=1)
-    elif int(key) == 2:
-        if p1[0].done:
-            if p1[0].win:
-                p2.update(done=1, lose=1)
-            else:
-                p2.update(done=1, win=1)
+    p3 = Player.objects.filter(name='Player3')
+    p4 = Player.objects.filter(name='Player4')
+    plist = [p1, p2, p3, p4]
+    
+    for p in plist:
+        if p[0].done:
+            if p[0].win:
+                for i in range(4):
+                    if plist[i] == p:
+                        continue
+                    plist[i].update(done=1, lose=1)
+                break
         
     #if answer and word and player and current:
     #    context = {'answer':answer, 'word':word, 'player':player+1, 'current':current}

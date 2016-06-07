@@ -40,7 +40,7 @@
 		<input type="submit" value="새로고침">
 	</form>
 
-	{% if player >= 2 %}
+	{% if player >= 4 %}
 		</br>
 		<form action="/game/" method="post">{% csrf_token %}
 			<input id="new" type="hidden" name="new" value="new">
