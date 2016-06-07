@@ -24,12 +24,10 @@
 		{% endif %}
 -->
 
-
-<!-- -->
 	<form action="/game/" method="post">{% csrf_token %}
 		<label for="answer">Answer: </label>
 		<input id="answer" type="text" name="answer" value="{{ player_answer }}">
-		<input id="word" type="hidden" name=""word" value="{{ word }}">
+		<input id="word" type="hidden" name="word" value="{{ word }}">
 		
 <!--	<input id="word" type="text" name="word" value="{{ word.word }}">
 		<input id="length" type="integer" name="length" value="{{ word.length }}">
@@ -37,24 +35,63 @@
 		<input id="current" type="text" name="current" value="{{ current }}"> -->
 		<input type="submit" value="OK">
 	</form>
-<!-- -->
 
 		{% if end %}
-		<form action="/rank/" method="post">{% csrf_token %}
-			<label for="id">ID: </label>
-			<input id="id" type="text" name="id" value="{{ player_answer }}">
-			<input type="submit" value="OK">
-		</form>
+			{% ifequal lives 0 %}
+			<form action="/rank/" method="post">{% csrf_token %}
+				<label for="id">ID: </label>
+				<input id="id" type="text" name="id" value="{{ player_answer }}">
+				<input id="result" type="hidden" name="result" value="lose">
+				<input type="submit" value="OK">
+			</form>
+			{% else %}
+			<form action="/rank/" method="post">{% csrf_token %}
+				<label for="id">ID: </label>
+				<input id="id" type="text" name="id" value="{{ player_answer }}">
+				<input id="result" type="hidden" name="result" value="win">
+				<input type="submit" value="OK">
+			</form>
+			{% endifequal %}
 		{% endif %}
-		
+<!--		
 		<script language="javascript">
 			var count = document.getElementById("player").value;
 		</script>
-
+-->
 		{% if answer %}
 		<p> answer: {{ answer }} </br> </p>
 		{% endif %}
+		{% if lives %}
+		<p> You have {{ lives }} lives. </br> </p>
+		{% endif %}
 
+		{% load staticfiles %}
+		{% ifequal lives 7 %}
+		<img id="image" src="{% static "images/11.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 6 %}
+		<img id="image" src="{% static "images/22.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 5 %}
+		<img id="image" src="{% static "images/33.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 4 %}
+		<img id="image" src="{% static "images/44.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 3 %}
+		<img id="image" src="{% static "images/55.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 2 %}
+		<img id="image" src="{% static "images/66.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 1 %}
+		<img id="image" src="{% static "images/77.jpg" %}" />
+		{% endifequal %}
+		{% ifequal lives 0 %}
+		<img id="image" src="{% static "images/88.jpg" %}" />
+		{% endifequal %}
+
+<!--
 		{% if count %}
 			{% if count|divisibleby:2 %}
 			<button id="input">Input</button>
@@ -108,7 +145,7 @@
 				}
 			}
 		</script>
-	
+-->	
 	</body>
   
 </html>

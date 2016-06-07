@@ -33,6 +33,7 @@ class Quiz(models.Model):
     key = models.CharField(max_length=10)
     answer = models.CharField(max_length=30, default='')
     current = models.CharField(max_length=30, default='')
+    lives = models.IntegerField(default=8)
 
     def __unicode__(self):
         return "%s(%s)" %(self.current, self.answer)
