@@ -12,7 +12,7 @@ class User(models.Model):   # table class inherits models.Model
 
 
 class Question(models.Model):
-    word = models.CharField(max_length=30)
+    word = models.CharField(max_length=45)
     length = models.IntegerField(default=0)
     hint = models.CharField(max_length=200)
     key = models.IntegerField(default=0)
@@ -43,8 +43,8 @@ class Player(models.Model):
 
 class Quiz(models.Model):
     key = models.CharField(max_length=10)
-    answer = models.CharField(max_length=30, default='')
-    current = models.CharField(max_length=30, default='')
+    answer = models.CharField(max_length=45, default='')
+    current = models.CharField(max_length=45, default='')
     lives = models.IntegerField(default=8)
 
     def __unicode__(self):
