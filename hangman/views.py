@@ -61,21 +61,19 @@ def game(request):
     p4 = Player.objects.filter(name='Player4')
     plist = [p1, p2, p3, p4]
     
+    cur = Quiz.objects.all()[0].current
+    end = False    
+    
     for p in plist:
         if p[0].done:
             if p[0].win:
+                end = True
+                cur = word
                 for i in range(4):
                     if plist[i] == p:
                         continue
                     plist[i].update(done=1, lose=1)
                 break
-
-    cur = Quiz.objects.all()[0].current    
-    end = False
-    
-    if p1[0].done or p2[0].done or p3[0].done or p4[0].done:
-        end = True
-        cur = word
     
     found = 0
     if answer != "#refresh#":
@@ -109,12 +107,17 @@ def game(request):
 
 
 def rank(request):
-    key = request.POST.get('key', '')
-    Counting.objects.filter(name='Init').update(count=1)
     user = request.POST.get('id', "default")
     result = request.POST.get('result', "lose")
-    if key != '':
-        Player.objects.filter(name='Player'+str(key)).update(init=1, lives=8, done=0, win=0, lose=0)
+    p1 = Player.objects.filter(name='Player1')
+    p2 = Player.objects.filter(name='Player2')
+    p3 = Player.objects.filter(name='Player3')
+    p4 = Player.objects.filter(name='Player4')
+    plist = [p1, p2, p3, p4]
+    if p1[0].done and p2[0].done and p3[0].done and p4[0].done:
+        Counting.objects.filter(name='Init').update(count=1)
+        for p in plist:
+            p.update(init=1, lives=8, done=0, win=0, lose=0)
     if result == "win":
         if User.objects.filter(name=user):
             User.objects.filter(name=user).update(score=F('score')+100)
