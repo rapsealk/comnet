@@ -1,62 +1,49 @@
-
 <!doctype html>
 <html lang = "ko">
 
 	<head>
 	
-	<meta charset="euc-kr">
+		<meta charset="euc-kr">
 
-	<title> 메인페이지 </title>
-	<style>
+		<title> 메인페이지 </title>
+	
+		<style>
 
-	h1{
+		h1{
 
-		color: #fff;
-		font-size: 200px;
+			color: #fff;
+			font-size: 200px;
 
-	}
+		}
 
-	body {
-		background-color: #ffcccc;
- 	 	font-family: "HelveticaNeue-Light";
-  		height:100%;
-  		text-align:center;
-  		font-size:18px;
-	}
+		body {
+			background-color: #ffcccc;
+	 	 	font-family: "HelveticaNeue-Light";
+	  		height:100%;
+	  		text-align:center;
+	  		font-size:18px;
+		}
 
-	</style>
+		</style>
 
 
 	</head>
 
-
-<!-- 60D7D7 D7D7EA -->
 	<body>
 
-	<h1> HANG MAN </h1>
+		<h1> HANG MAN </h1>
 
-	<!-- <p> ID: <input type="text"> <input type="button" value="확인" onclick="location.href='/wait'"> </p> -->
+		<form action="/wait/" method="post">{% csrf_token %}
+			<input id="new" type="hidden" name="new" value="new">
+			<input type="submit" value="대기페이지">
+		</form>
 
-	<!-- <input type = "submit" value="확인"> -->
+		</br>
 
-	<form action="/wait/" method="post">{% csrf_token %}
-		<input id="new" type="hidden" name="new" value="new">
-		<input type="submit" value="대기페이지">
-	</form>
+		<form action="/rank/" method="post">{% csrf_token %}
+			<input type="submit" value="랭킹페이지">
+		</form>
 
-<!--	<a href="/wait"> <p>대기페이지</p> </a> -->
-	</br>
-
-	<form action="/rank/" method="post">{% csrf_token %}
-		<input type="submit" value="랭킹페이지">
-	</form>
-	
-<!--	<a href="/rank"> <p>랭킹페이지</p> </a> -->
-		
-<!--	<form name="input" method="post" action="http://127.0.0.1:8000/index/aaaaa/">
-	 {% csrf_token %}
-    	<input type="text"va="va" maxlength="10">
-    	<input type="submit" value="전송">
-	</form>
-	<p> va:</p> --!>
 	</body>
+
+</html>

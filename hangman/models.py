@@ -28,9 +28,9 @@ class Counting(models.Model):
     def __unicode__(self):
         return "%s: %d" %(self.name, self.count)
 
+
 class Player(models.Model):
     name = models.CharField(max_length=30, default='default')
-    #number = models.IntegerField(default=0)
     init = models.IntegerField(default=1)
     lives = models.IntegerField(default=8)
     done = models.IntegerField(default=0)

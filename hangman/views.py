@@ -34,29 +34,16 @@ def wait(request):
     context = {'player' : player, 'key' : key}
     return render(request, 'waiting.html', context)
 
-#def bridge(request):
-#    Counting.objects.filter(name='Player').update(count=F('count')-1)
-#    player = Counting.objects.all()
-#    player = player[0]
-#    word = Question.objects.all().order_by('key')
-#    word = word[randint(0, len(word)-1)]
-#    context = {'player' : player, 'word' : word}
-#    return render(request, 'game.html', context)
 
 def game(request):
     answer = request.POST.get('answer', '')
-    #player = request.POST.get('player', 0)
     word = request.POST.get('word', '')
     new = request.POST.get('new', '')
     key = request.POST.get('key', 0)
     if new == 'new':
         Counting.objects.filter(name='Player').update(count=F('count')-1)
-    #if Counting.objects.filter(name='Init')[0].count == 1:
     if Player.objects.filter(name='Player'+str(key))[0].init == 1:        
         Player.objects.filter(name='Player'+str(key)).update(init=0)
-        #Counting.objects.filter(name='Player').update(count=F('count')-1)
-        #player = Counting.objects.all()
-        #player = player[0].count
     if Counting.objects.filter(name='Init')[0].count == 1:
         word = Question.objects.all().order_by('key')
         word = word[randint(0, len(word)-1)]
@@ -82,16 +69,14 @@ def game(request):
                         continue
                     plist[i].update(done=1, lose=1)
                 break
-        
-    #if answer and word and player and current:
-    #    context = {'answer':answer, 'word':word, 'player':player+1, 'current':current}
-    #else:
-    #    context = {'answer':answer, 'word':word, 'player':player, 'current':current}
-    cur = Quiz.objects.all()[0].current
-    
-    #context = {'player' : player, 'word' : word, 'answer' : current}
 
+    cur = Quiz.objects.all()[0].current    
     end = False
+    
+    if p1[0].done or p2[0].done or p3[0].done or p4[0].done:
+        end = True
+        cur = word
+    
     found = 0
     if answer != "#refresh#":
         if len(answer)==1:
@@ -111,22 +96,14 @@ def game(request):
                 found += 1
 
         if found == 0:
-            #Quiz.objects.filter(key='prob').update(lives=F('lives')-1)
             Player.objects.filter(name='Player'+str(key)).update(lives=F('lives')-1)
-    #lives = Quiz.objects.filter(key='prob')[0].lives
     lives = Player.objects.filter(name='Player'+str(key))[0].lives
     if lives == 0:
-        #cur = "You Lose!"
         Player.objects.filter(name='Player'+str(key)).update(done=1, lose=1)
-        end = True
-
-    if p1[0].done and p2[0].done:
-        Quiz.objects.filter(key='prob').update(current=word)
         end = True
 
     lose = Player.objects.filter(name='Player'+str(key))[0].lose
     Quiz.objects.filter(key='prob').update(current=cur)
-    #'player' : player    
     context = {'key' : key, 'word' : word, 'answer' : cur, 'lives': lives, 'lose' : lose, 'end' : end}
     return render(request, 'game.html', context)
 
@@ -147,17 +124,3 @@ def rank(request):
     ranker = User.objects.all().order_by('-score')[:5]
     context = {'ranker' : ranker}
     return render(request, 'rank.html', context)
-
-#def aaaaa(request):
-#   t = get_template('index.html')
-#   k = request.GET
-#   ttt = k['va']
-#   html = t.render(Context({'va' : ttt}))
-#   return HttpResponse(html)
-
-
-
-
-
-
-

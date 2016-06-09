@@ -8,7 +8,6 @@
 
 	<title> 랭킹페이지 </title>
 
-
 	<style>
 
 	p{
@@ -33,37 +32,36 @@
 
 	</style>
 
-
 	</head>
-
-
 
 	<body>
 
 	<form action="/index/" method="post">{% csrf_token %}
 		<input type="submit" value="메인페이지">
 	</form>
-<!--	<a href="/index"> <p>메인페이지 </p></a> -->
 
 	{% if ranker %}
-	<p> Ranking </br> </p>
-	<ul>
-	<table>
-		<tr>
-			<td>등수 </td>
-			<td>아이디</td>
-			<td>점수</td>
-		</tr>
-		{% for rank in ranker %}
-		<tr>
-			<td>  {{ forloop.counter }}  </td>
-			<td> {{ rank.name }} </td>
-			<td> {{ rank.score }} </td>
-		</tr>
-		{% endfor %}
-	</table>
-	</ul>
+		<p> Ranking </br> </p>
+		<ul>
+		<table>
+			<tr>
+				<td>등수 </td>
+				<td>아이디</td>
+				<td>점수</td>
+			</tr>
+			{% for rank in ranker %}
+				<tr>
+					<td>  {{ forloop.counter }}  </td>
+					<td> {{ rank.name }} </td>
+					<td> {{ rank.score }} </td>
+				</tr>
+			{% endfor %}
+		</table>
+		</ul>
 	{% else %}
-	<p>No Data</p>
+		<p>No Data</p>
 	{% endif %}
+
 	</body>
+
+</html>
